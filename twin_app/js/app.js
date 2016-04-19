@@ -68,8 +68,8 @@ angular.module('twin', ['ui.router', 'twin.controllers', 'LocalStorageModule'])
             templateUrl: 'templates/advancedsearch.html',
             controller: 'advancedsearchCtrl'
         })
-	.state('myprofile', {
-            url: '/myprofile',
+	.state('profile', {
+            url: '/profile',
             templateUrl: 'templates/myprofile.html',
             controller: 'ProfileCtrl'
         })
