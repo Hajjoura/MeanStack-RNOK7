@@ -38,7 +38,41 @@ angular.module('twin', ['ui.router', 'twin.controllers', 'LocalStorageModule'])
             templateUrl: 'templates/offers.html',
             controller: 'OffersCtrl'
         })
+    
+        .state('users', {
+            url: '/users',
+            templateUrl: 'templates/users.html',
+            controller: 'UsersCtrl'
+        })
+    
+        .state('addoffers', {
+            url: '/addoffers',
+            templateUrl: 'templates/addoffers.html',
+            controller: 'addoffersCtrl'
+        })
+	
+	.state('updateresume', {
+            url: '/updateresume',
+            templateUrl: 'templates/updateresume.html',
+            controller: 'UpdateresumeCtrl'
+        })
+    
+    .state('barbechoffers', {
+            url: '/barbechoffers',
+            templateUrl: 'templates/barbechoffers.html',
+            controller: 'barbechoffersCtrl'
+        })
 
+          .state('advancedsearch', {
+            url: '/advancesdsearch',
+            templateUrl: 'templates/advancedsearch.html',
+            controller: 'advancedsearchCtrl'
+        })
+	.state('myprofile', {
+            url: '/myprofile',
+            templateUrl: 'templates/myprofile.html',
+            controller: 'ProfileCtrl'
+        })
 
         .state('about', {
             url: '/about',
