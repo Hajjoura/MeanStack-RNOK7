@@ -18,6 +18,7 @@ router.post('/register', function(req, res, next) {
     })
 });
 
+
 router.use(function(req, res, next) {
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
     if (token) {
@@ -38,6 +39,23 @@ router.use(function(req, res, next) {
     }
 });
 
+router.put('/updateresume', function(req, res, next) {
+    models.user.findByIdAndUpdate(req.body.id, {$set: {
+        work: req.body.work,
+        place: req.body.place,
+		education: JSON.parse(req.body.education),
+        experience:JSON.parse(req.body.experience)
+    }}, {new: true}, function(err, user){
+		res.json(user);
+	});
+    
+});
+
+router.get('/profile', function(req, res, next) {
+	models.user.findById(req.user._id, function(err, user){
+        return res.json(user);
+    });
+});
 
 router.get('/', function(req, res, next) {
     models.user.find({}, function(err, users){

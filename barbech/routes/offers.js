@@ -37,4 +37,10 @@ router.get('/:id', function(req, res, next) {
     });
 });
 
+router.get('/advancedsearch/:keywords', function(req, res, next) {
+	models.offer.find( {$text: {$search : req.params.keywords}}, {score: {$meta: 'textScore'}}).sort({score: {$meta: "textScore"}}).exec(function(err, offers) {
+		res.json(offers);
+	});
+});
+
 module.exports = router;
