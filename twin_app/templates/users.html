@@ -1,0 +1,21 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">Liste des users</div>
+    <div class="panel-body">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>work</th>
+                    <th>place</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in users">
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.work }}</td>
+                    <td>{{ user.place }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
