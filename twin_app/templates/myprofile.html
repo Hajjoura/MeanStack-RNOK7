@@ -1,0 +1,43 @@
+<table >
+    <tr>
+        <td><h3>Myprofile</h3></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>username</td>
+        <td>{{username}}</td>
+    </tr>
+    <tr>
+        <td>place</td>
+        <td>{{place}}</td>
+    </tr>
+    <tr>
+        <td>work</td>
+        <td>{{work}}</td>
+    </tr>
+	 <tr>
+        <td>Education</td>
+		  <tr ng-repeat="e in ed">
+        <td>{{e.date_start}}</td>
+		 <td>{{e.date_end}}</td>
+		  <td>{{e.description}}</td>
+		  <td>&nbsp;&nbsp;</td>
+		 <td>{{e.place}}</td>
+			  </tr>
+    </tr>
+
+<tr>
+        <td>Experience</td>
+		  <tr ng-repeat="e in ex">
+        <td>{{e.date_start}}</td>
+		 <td>{{e.date_end}}</td>
+		  <td>{{e.description}}</td>
+		  <td>&nbsp;&nbsp;</td>
+		 <td>{{e.place}}</td>
+			  </tr>
+    </tr>
+    
+</table>
+<div>
+    
+</div>

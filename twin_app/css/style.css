@@ -1,1 +1,7 @@
 body{padding-top: 80px;}
+
+.angular-google-map-container { height: 400px; }
+#gmaps {
+    width: 450px;
+    height: 450px;
+}

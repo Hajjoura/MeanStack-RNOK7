@@ -13,7 +13,8 @@ angular.module('twin', ['ui.router', 'twin.controllers', 'LocalStorageModule'])
 
         .state('home', {
             url: '/home',
-            templateUrl: 'templates/home.html'
+            templateUrl: 'templates/home.html',
+			controller: 'HomeCtrl'
         })
 
         .state('login', {
@@ -26,6 +27,10 @@ angular.module('twin', ['ui.router', 'twin.controllers', 'LocalStorageModule'])
             url: '/register',
             templateUrl: 'templates/register.html',
             controller: 'RegisterCtrl'
+        })
+        .state('alert', {
+            url: '/alert',
+            templateUrl: 'templates/alerte.html'
         })
 
         .state('logout', {
