@@ -71,6 +71,7 @@ app.post('/authenticate', function(req, res) {
 app.use('/', require('./routes/index'));
 app.use('/offers', require('./routes/offers'));
 app.use('/users', require('./routes/users'));
+//app.use('/mail', require('./routes/mail'));
 app.use('/barbechoffers', require('./routes/barbechoffers'));
 
 // catch 404 and forward to error handler

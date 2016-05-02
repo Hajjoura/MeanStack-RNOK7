@@ -3,6 +3,9 @@ var router = express.Router();
 var models = require('../models');
 var jwt = require('jsonwebtoken');
 
+
+
+
 router.use(function(req, res, next) {
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
     if (token) {
