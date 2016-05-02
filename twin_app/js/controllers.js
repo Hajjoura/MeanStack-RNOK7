@@ -1,65 +1,47 @@
-angular.module('twin.controllers', ["ui.map", "ui.event"])
+angular.module('twin.controllers', [])
 
 .controller('MenuCtrl', function($scope, localStorageService) {
 
 })
-.controller('HomeCtrl', function($scope){
 
-    $scope.lng = "0";
-    $scope.accuracy = "0";
-    $scope.error = "";
-    $scope.model = { myMap: undefined };
-    $scope.myMarkers = [];
+.controller('HomeCtrl', function($scope, uiGmapGoogleMapApi, $http){
+	$scope.map = { center: { latitude: 36.8986883, longitude: 10.1875003 }, zoom: 14 };
+	$scope.marker_id = 'test';
+	uiGmapGoogleMapApi.then(function(maps) {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				
+			  var pos = {
+				latitude: position.coords.latitude,
+				longitude: position.coords.longitude
+			  };
+				
+				var geocoder = new google.maps.Geocoder();
+				var latlng = new google.maps.LatLng(pos.latitude, pos.longitude);
+    geocoder.geocode({'latLng': latlng}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+		  var keywords = results[0].address_components[1].short_name;
+		  $http({
+			method: 'GET',
+			url: $scope.endpoint + 'offers/advancedsearch/'+keywords+'?token='+$scope.token
+		}).then(function successCallback(response) {
+			$scope.offers = response.data;
+		}, function errorCallback(response) {
 
-    $scope.showResult = function () {
-        return $scope.error == "";
-    }
-
-    $scope.mapOptions = {
-        center: new google.maps.LatLng($scope.lat, $scope.lng),
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-
-    $scope.showPosition = function (position) {
-        $scope.lat = position.coords.latitude;
-        $scope.lng = position.coords.longitude;
-        $scope.accuracy = position.coords.accuracy;
-        $scope.$apply();
-
-        var latlng = new google.maps.LatLng($scope.lat, $scope.lng);
-        $scope.model.myMap.setCenter(latlng);
-        $scope.myMarkers.push(new google.maps.Marker({ map: $scope.model.myMap, position: latlng }));
-    }
-
-    $scope.showError = function (error) {
-        switch (error.code) {
-            case error.PERMISSION_DENIED:
-                $scope.error = "User denied the request for Geolocation."
-                break;
-            case error.POSITION_UNAVAILABLE:
-                $scope.error = "Location information is unavailable."
-                break;
-            case error.TIMEOUT:
-                $scope.error = "The request to get user location timed out."
-                break;
-            case error.UNKNOWN_ERROR:
-                $scope.error = "An unknown error occurred."
-                break;
-        }
-        $scope.$apply();
-    }
-
-    $scope.getLocation = function () {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError);
-        }
-        else {
-            $scope.error = "Geolocation is not supported by this browser.";
-        }
-    }
-
-    $scope.getLocation();
+		});
+	  }
+	})
+				
+			  $scope.map.center = pos;
+				$scope.$apply();
+			}, function() {
+			  alert('error');
+			});
+		  } else {
+			// Browser doesn't support Geolocation
+			alert('error');
+		  }
+    });
 })
 
 .controller('LoginCtrl', function($scope, $http, localStorageService, $state, $window) {
@@ -89,7 +71,7 @@ angular.module('twin.controllers', ["ui.map", "ui.event"])
             method: 'POST',
             url: $scope.endpoint + 'users/register',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            data: 'username=' + $scope.username + '&password='+$scope.password + '&place='+$scope.place + '&work='+$scope.work
+            data: 'username=' + $scope.username + '&password='+$scope.password + '&place='+$scope.place +'&mail='+$scope.mail + '&work='+$scope.work
          }).then(function successCallback(response) {
             $state.go('login', {}, {reload: true});
         }, function errorCallback(response) {
@@ -138,6 +120,53 @@ angular.module('twin.controllers', ["ui.map", "ui.event"])
 
 	};    
 })
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+.controller('SuitableOffersCtrl', function($scope, $http, localStorageService, $state, $window) {
+	$http({
+		method: 'GET',
+		url: $scope.endpoint + 'users/profile?token='+$scope.token,
+	 }).then(function successCallback(response) {
+	  	$http({
+			method: 'GET',
+			url: $scope.endpoint + 'offers/advancedsearch/'+response.data.work+'?token='+$scope.token
+		}).then(function successCallback(response) {
+			$scope.offers = response.data;
+		}, function errorCallback(response) {
+
+		});
+	}, function errorCallback(response) {
+
+	});
+	
+	
+})
+
+///////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+.controller('OffersByplaceCtrl', function($scope, $http, localStorageService, $state, $window) {
+	$http({
+		method: 'GET',
+		url: $scope.endpoint + 'users/profile?token='+$scope.token,
+	 }).then(function successCallback(response) {
+	  	$http({
+			method: 'GET',
+			url: $scope.endpoint + 'offers/advancedsearch/'+response.data.place+'?token='+$scope.token
+		}).then(function successCallback(response) {
+			$scope.offers = response.data;
+		}, function errorCallback(response) {
+
+		});
+	}, function errorCallback(response) {
+
+	});
+	
+	
+})
+
 ///////////////////
 .controller('ProfileCtrl', function($scope, $http, localStorageService, $state, $window) {
 	$scope.ed =[];
@@ -187,7 +216,7 @@ angular.module('twin.controllers', ["ui.map", "ui.event"])
  //pause                      
 .controller('LogoutCtrl', function($scope, $http, localStorageService, $window, $state) {
     if($scope.token == null){
-        $state.go('login', {}, {reload: true});
+        $state.go('login', {}, {reload: false});
     }
     localStorageService.remove('token');
     $window.location.reload();
@@ -226,12 +255,6 @@ angular.module('twin.controllers', ["ui.map", "ui.event"])
 .controller('advancedsearchCtrl', function($scope, $http) {
 	$scope.keywords = 'informatique';
 	$scope.offers = [];
-    $scope.showPosition = function (position) {
-        $scope.lat = position.coords.latitude;
-        $scope.lng = position.coords.longitude;
-        $scope.accuracy = position.coords.accuracy;
-        $scope.$apply();
-    }
     $scope.search = function(){
 		$http({
 			method: 'GET',

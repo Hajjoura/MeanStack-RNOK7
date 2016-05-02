@@ -1,4 +1,4 @@
-angular.module('twin', ['ui.router', 'twin.controllers', 'LocalStorageModule'])
+angular.module('twin', ['ui.router', 'twin.controllers', 'LocalStorageModule', 'uiGmapgoogle-maps'])
 
 .run(function($rootScope, localStorageService) {
     $rootScope.token = localStorageService.get('token');
@@ -6,7 +6,6 @@ angular.module('twin', ['ui.router', 'twin.controllers', 'LocalStorageModule'])
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
-
     $urlRouterProvider.otherwise('/home');
 
     $stateProvider
@@ -27,10 +26,6 @@ angular.module('twin', ['ui.router', 'twin.controllers', 'LocalStorageModule'])
             url: '/register',
             templateUrl: 'templates/register.html',
             controller: 'RegisterCtrl'
-        })
-        .state('alert', {
-            url: '/alert',
-            templateUrl: 'templates/alerte.html'
         })
 
         .state('logout', {
@@ -79,6 +74,16 @@ angular.module('twin', ['ui.router', 'twin.controllers', 'LocalStorageModule'])
             controller: 'ProfileCtrl'
         })
 
+       .state('suitableOffers', {
+            url: '/suitableOffers',
+            templateUrl: 'templates/suitableOffers.html',
+            controller: 'SuitableOffersCtrl'
+        })
+	  .state('offersByplace', {
+            url: '/offersByplace',
+            templateUrl: 'templates/offersByplace.html',
+            controller: 'OffersByplaceCtrl'
+        })
         .state('about', {
             url: '/about',
             templateUrl: 'templates/about.html'

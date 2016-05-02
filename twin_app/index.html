@@ -6,87 +6,25 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
 
+    <script type="text/javascript" src="js/lodash.min.js"></script>
     <script type="text/javascript" src="js/angular.min.js"></script>
     <script type="text/javascript" src="js/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="js/angular-local-storage.min.js"></script>
+    <script type="text/javascript" src="js/angular-simple-logger.js"></script>
+	<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+    <script type="text/javascript" src="js/angular-google-maps.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
-	<script type="text/javascript" src="js/angular-google-maps.min.js"></script>
-		<script type="text/javascript" src="js/lodash.min.js"></script>
-		<script type="text/javascript" src="js/js"></script>
-	    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&language=en"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
-    <script src="js/event.js"></script>
-    <script src="js/ui-map.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <style type="text/css">
-        .map {
-            height: 400px;
-            width: 100%;
-        }
-        .main {
-            margin-top: 30px;
-        }
-    </style>
-	<script type="text/javascript">
+		
+	
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-1734981-6']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
-    <!--
-<script>
-var x = document.getElementById("demo");
-
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, showError);
-    } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
-    }
-}
-
-function showPosition(position) {
-    var latlon = position.coords.latitude + "," + position.coords.longitude;
-
-    var img_url = "http://maps.googleapis.com/maps/api/staticmap?center="
-    +latlon+"&zoom=14&size=400x300&sensor=false";
-    document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
-}
-
-function showError(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            x.innerHTML = "User denied the request for Geolocation."
-            break;
-        case error.POSITION_UNAVAILABLE:
-            x.innerHTML = "Location information is unavailable."
-            break;
-        case error.TIMEOUT:
-            x.innerHTML = "The request to get user location timed out."
-            break;
-        case error.UNKNOWN_ERROR:
-            x.innerHTML = "An unknown error occurred."
-            break;
-    }
-}
-</script>
-
--->
 
 </head>
 <body>
 
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="MenuCtrl">
     <div class="navbar-header">
-        <a class="navbar-brand" ui-sref="#">Barbech</a>
+        <a class="navbar-brand" ui-sref="#">Twin</a>
     </div>
     <ul class="nav navbar-nav">
         <li><a ui-sref="home">Home</a></li>
@@ -96,6 +34,8 @@ function showError(error) {
 		<li><a ui-sref="advancedsearch" ng-show="token">Search</a></li>
         <li><a ui-sref="offers" ng-show="token">Offers</a></li>
 		<li><a ui-sref="barbechoffers" ng-show="token">Our Offers</a></li>
+			<li><a ui-sref="suitableOffers" ng-show="token">Suitable Offers</a></li>
+		<li><a ui-sref="offersByplace" ng-show="token">Offers in my city</a></li>
         <li><a ui-sref="addoffers" ng-show="token">Add Offer</a></li>
         <li><a ui-sref="users" ng-show="token">Users</a></li>
         <li><a ui-sref="updateresume" ng-show="token">Update your resume</a></li>
